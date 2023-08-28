@@ -130,7 +130,7 @@
               ]
             },
             {
-              "title": "Add search enpoints",
+              "title": "Add search endpoints",
               "description": "",
               "status": "Doing",
               "subtasks": [
@@ -196,11 +196,11 @@
             },
             {
               "title": "Create wireframe prototype",
-              "description": "Create a greyscale clickable wireframe prototype to test our asssumptions so far.",
+              "description": "Create a greyscale clickable wireframe prototype to test our assumptions so far.",
               "status": "Done",
               "subtasks": [
                 {
-                  "title": "Create clickable wireframe prototype in Balsamiq",
+                  "title": "Create clickable wireframe prototype in Balsamic",
                   "isCompleted": true
                 }
               ]
@@ -355,7 +355,7 @@
                   "isCompleted": false
                 },
                 {
-                  "title": "Publish on Inndie Hackers",
+                  "title": "Publish on Indie Hackers",
                   "isCompleted": false
                 },
                 {
@@ -389,7 +389,7 @@
               "status": "",
               "subtasks": [
                 {
-                  "title": "Launch privately to our waitlist",
+                  "title": "Launch privately to our wait-list",
                   "isCompleted": false
                 },
                 {
