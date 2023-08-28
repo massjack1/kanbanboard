@@ -1,8 +1,17 @@
 import React from 'react';
+import Header from "./components/Header.jsx";
+import Center from "./components/Center.jsx";
 
 function App() {
     return (
-        <div className="text-4xl font-bold text-amber-950">App</div>
+        <div>
+            {/* Header Section */}
+            <Header />
+
+            {/* Header Section */}
+            <Center />
+
+        </div>
     )
 }
 
