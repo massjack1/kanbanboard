@@ -56,13 +56,13 @@ function HeaderDropdown({setOpenDropdown}) {
                             Create New Card
                         </p>
                     </div>
-                    <div className='mx-2 p-4 space-x-2 bg-slate-100 dark:bg-[#20212x] flex justify-center items-center rounded-lg'>
+                    <div className='mx-2 p-4 space-x-2 bg-slate-100 dark:bg-[#20212c] flex justify-center items-center rounded-lg'>
                         <img src={lightIcon} alt=""/>
 
                         <Switch
                             checked={darkSide}
                             onChange={toggleDarkMode}
-                        className={`${darkSide ? 'bg-[#635fc71]' : 'bg-gray-200'} relative inline-flex h6 w-11 items-center rounded-full`}>
+                        className={`${darkSide ? 'bg-[#DD7878]' : 'bg-gray-200'} relative inline-flex h6 w-11 items-center rounded-full`}>
 
                             <span
                             className={`${darkSide ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform rounded-full bg-white transition`} />
