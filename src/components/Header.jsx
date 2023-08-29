@@ -4,8 +4,10 @@ import iconDrop from "../assets/icon-chevron-down.svg";
 import iconUp from "../assets/icon-chevron-up.svg";
 import elipsis from "../assets/icon-vertical-ellipsis.svg";
 import HeaderDropdown from "../components/HeaderDropdown.jsx";
+import AddEditBoardModal from "../modals/AddEditBoardModal.jsx";
+import PropTypes from "prop-types";
 
-function Header() {
+function Header({ setBoardModalOpen, BoardModalOpen }) {
 
     const [openDropdown, setOpenDropdown] = useState(false)
 
@@ -44,10 +46,19 @@ function Header() {
 
             </header>
 
-            {openDropdown && <HeaderDropdown setOpenDropdown={setOpenDropdown} />}
+            {openDropdown && <HeaderDropdown setBoardModalOpen={setBoardModalOpen} setOpenDropdown={setOpenDropdown} />}
+
+            {
+                boardModalOpen && <AddEditBoardModal setBoardModalOpen={setBoardModalOpen} />
+            }
 
         </div>
     );
 }
+
+Header.propTypes = {
+    setBoardModalOpen: PropTypes.func.isRequired,
+    BoardModalOpen: PropTypes.bool.isRequired,
+};
 
 export default Header;

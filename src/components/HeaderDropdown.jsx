@@ -8,7 +8,7 @@ import useDarkMode from "../Hooks/useDarkMode.js";
 import {useState} from "react";
 
 
-function HeaderDropdown({setOpenDropdown}) {
+function HeaderDropdown({setOpenDropdown, setBoardModalOpen}) {
     const [colorTheme, setTheme] = useDarkMode()
     const [darkSide, setDarkSide] = useState(
         colorTheme === 'light'
@@ -50,7 +50,10 @@ function HeaderDropdown({setOpenDropdown}) {
                         </div>
                     ))}
                     <div
-                    className='flex items-baseline space-x-2 text-[#DD7878] px-5 py-4'>
+                    className='cursor-pointer flex items-baseline space-x-2 text-[#DD7878] px-5 py-4' onClick={() => {
+                        setBoardModalOpen(true)
+                        setOpenDropdown(false)
+                    }}>
                         <img src={boardIcon} className='h-4' alt="boards"/>
                         <p className='text-lg font-bold'>
                             Create New Card
@@ -81,6 +84,7 @@ function HeaderDropdown({setOpenDropdown}) {
 
 // Define prop types validation
 HeaderDropdown.propTypes = {
+    setBoardModalOpen: PropTypes.func.isRequired,
     setOpenDropdown: PropTypes.func.isRequired,
 };
 
