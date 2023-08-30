@@ -10,7 +10,7 @@ function App() {
     return (
         <div>
             {/* Header Section */}
-            <Header boardModalOpen = { boardModalOpen } setBoardModalOpen={setBoardModalOpen}/>
+            <Header boardModalOpen = { boardModalOpen } setBoardModalOpen={setBoardModalOpen} BoardModalOpen/>
 
             {/* Header Section */}
             <Center />

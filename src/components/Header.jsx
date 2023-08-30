@@ -7,7 +7,7 @@ import HeaderDropdown from "../components/HeaderDropdown.jsx";
 import AddEditBoardModal from "../modals/AddEditBoardModal.jsx";
 import PropTypes from "prop-types";
 
-function Header({ setBoardModalOpen, BoardModalOpen }) {
+function Header({ setBoardModalOpen, boardModalOpen }) {
 
     const [openDropdown, setOpenDropdown] = useState(false)
 
@@ -49,7 +49,7 @@ function Header({ setBoardModalOpen, BoardModalOpen }) {
             {openDropdown && <HeaderDropdown setBoardModalOpen={setBoardModalOpen} setOpenDropdown={setOpenDropdown} />}
 
             {
-                boardModalOpen && <AddEditBoardModal setBoardModalOpen={setBoardModalOpen} />
+                boardModalOpen && <AddEditBoardModal setBoardModalOpen={setBoardModalOpen}   BoardModalOpen/>
             }
 
         </div>
@@ -58,7 +58,7 @@ function Header({ setBoardModalOpen, BoardModalOpen }) {
 
 Header.propTypes = {
     setBoardModalOpen: PropTypes.func.isRequired,
-    BoardModalOpen: PropTypes.bool.isRequired,
+    boardModalOpen: PropTypes.bool.isRequired,
 };
 
 export default Header;
