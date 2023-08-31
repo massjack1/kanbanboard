@@ -24,7 +24,7 @@ function Header({ setBoardModalOpen, boardModalOpen }) {
                     </h3>
                     <div className="flex items-center">
                         <h3 className="truncate max-w-[200px] md:text-2xl text-xl font-bold md:ml-20 font-sans">
-                            board Name
+                            card Name
                         </h3>
                         <img src={openDropdown ? iconUp : iconDrop} alt="dropdown icon" className="w-3 ml-2 md:hidden cursor-pointer" onClick={() => setOpenDropdown(state => !state) }/>
                     </div>
