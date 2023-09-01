@@ -7,11 +7,13 @@ import HeaderDropdown from "../components/HeaderDropdown.jsx";
 import AddEditBoardModal from "../modals/AddEditBoardModal.jsx";
 import PropTypes from "prop-types";
 import {useDispatch, useSelector} from "react-redux";
+import AddEditTaskModal from "../modals/AddEditTaskModal.jsx";
 
 function Header({ setBoardModalOpen, boardModalOpen }) {
 
     const [openDropdown, setOpenDropdown] = useState(false);
     const [boardType , setBoardType] = useState('add');
+    const [openAddEditTask, setOpenAddEditTask] = useState(false)
     const dispatch = useDispatch();
 
     const boards = useSelector((state) => state.boards);
@@ -43,7 +45,11 @@ function Header({ setBoardModalOpen, boardModalOpen }) {
                         + Add Card
                     </button>
 
-                    <button className="button py-1 px-3 md:hidden">
+                    <button onClick={
+                        () => {
+                            setOpenAddEditTask(state => !state)
+                        }
+                    } className="button py-1 px-3 md:hidden">
                         +
                     </button>
 
@@ -58,6 +64,10 @@ function Header({ setBoardModalOpen, boardModalOpen }) {
                 boardModalOpen && <AddEditBoardModal setBoardModalOpen={setBoardModalOpen} type={boardType} BoardModalOpen={boardModalOpen} />
 
 
+            }
+
+            {
+                openAddEditTask && <AddEditTaskModal setOpenAddEditTask={setOpenAddEditTask} device='mobile'/>
             }
 
         </div>
