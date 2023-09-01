@@ -2,9 +2,17 @@ import PropTypes from 'prop-types';
 import {useState} from "react";
 import { v4 as uuidv4 } from 'uuid';
 import crossIcon from "../assets/icon-cross.svg";
+import {useDispatch} from "react-redux";
+import boardsSlice from "../redux/boardsSlice.js";
 
-function AddEditBoardModal({setBoardModalOpen , type , BoardModalOpen }) {
+
+
+function AddEditBoardModal({setBoardModalOpen , type}) {
+    const dispatch = useDispatch()
     const [name, setName] = useState('')
+    // eslint-disable-next-line no-unused-vars
+    const [isValid, setIsValid] = useState(true);
+
     const [newColumns, setNewColumns] = useState(
         [
             {name : 'Todo' , task : [] , id : uuidv4()},
@@ -24,6 +32,31 @@ function AddEditBoardModal({setBoardModalOpen , type , BoardModalOpen }) {
 
     const onDelete = (id) => {
         setNewColumns( (perState) => perState.filter((el) => el.id !== id ))
+    }
+
+    const validate = () => {
+        setIsValid(false)
+        if(!name.trim()) {
+            return false
+        }
+
+        for ( let i = 0; i < newColumns.length; i++) {
+            if(!newColumns[i].name.trim()){
+                return false
+            }
+        }
+
+        setIsValid(true)
+        return true
+    }
+
+    const onSubmit = (type) => {
+        setBoardModalOpen(false)
+        if(type === 'add'){
+            dispatch(boardsSlice.actions.addBoard({name, newColumns}))
+        } else {
+            dispatch(boardsSlice.actions.editBoard({ name, newColumns }));
+        }
     }
 
     return (
@@ -89,7 +122,12 @@ function AddEditBoardModal({setBoardModalOpen , type , BoardModalOpen }) {
                        + Add new column
                    </button>
 
-                   <button className=" w-full items-center hover:opacity-75 dark:text-white dark:bg-[#DD7878] mt-8 relative text-white bg-[#DD7878] py-2 rounded-full">
+                   <button className=" w-full items-center hover:opacity-75 dark:text-white dark:bg-[#DD7878] mt-8 relative text-white bg-[#DD7878] py-2 rounded-full"
+                           onClick={() => {
+                               // eslint-disable-next-line
+                               const isValid = validate();
+                               if (isValid === true) onSubmit(type);
+                           }}>
                        { type === 'add' ? 'Create New Board' : 'Save Changes'}
                    </button>
                </div>
@@ -101,9 +139,9 @@ function AddEditBoardModal({setBoardModalOpen , type , BoardModalOpen }) {
 }
 
 AddEditBoardModal.propTypes = {
-    setBoardModalOpen: PropTypes.bool.isRequired,
-    BoardModalOpen: PropTypes.bool.isRequired,
+    setBoardModalOpen: PropTypes.func.isRequired,
     type: PropTypes.string.isRequired,
+    BoardModalOpen: PropTypes.bool.isRequired,
 };
 
 export default AddEditBoardModal;
