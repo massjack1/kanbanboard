@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 function Header({ setBoardModalOpen, boardModalOpen }) {
 
     const [openDropdown, setOpenDropdown] = useState(false)
+    const [boardType , setBoardType] = useState('add')
 
     return (
         <div className="p-4 fixed left-0 bg-white dark:bg-[#2b2c37] z-50 right-0">
@@ -24,7 +25,7 @@ function Header({ setBoardModalOpen, boardModalOpen }) {
                     </h3>
                     <div className="flex items-center">
                         <h3 className="truncate max-w-[200px] md:text-2xl text-xl font-bold md:ml-20 font-sans">
-                            card Name
+                            board Name
                         </h3>
                         <img src={openDropdown ? iconUp : iconDrop} alt="dropdown icon" className="w-3 ml-2 md:hidden cursor-pointer" onClick={() => setOpenDropdown(state => !state) }/>
                     </div>
@@ -49,7 +50,9 @@ function Header({ setBoardModalOpen, boardModalOpen }) {
             {openDropdown && <HeaderDropdown setBoardModalOpen={setBoardModalOpen} setOpenDropdown={setOpenDropdown} />}
 
             {
-                boardModalOpen && <AddEditBoardModal setBoardModalOpen={setBoardModalOpen}   BoardModalOpen/>
+                boardModalOpen && <AddEditBoardModal setBoardModalOpen={setBoardModalOpen} type={boardType} BoardModalOpen={boardModalOpen} />
+
+
             }
 
         </div>
@@ -58,6 +61,7 @@ function Header({ setBoardModalOpen, boardModalOpen }) {
 
 Header.propTypes = {
     setBoardModalOpen: PropTypes.func.isRequired,
+    type: PropTypes.string.isRequired,
     boardModalOpen: PropTypes.bool.isRequired,
 };
 

@@ -3,7 +3,7 @@ import {useState} from "react";
 import { v4 as uuidv4 } from 'uuid';
 import crossIcon from "../assets/icon-cross.svg";
 
-function AddEditBoardModal({setBoardModalOpen , type ,}) {
+function AddEditBoardModal({setBoardModalOpen , type , BoardModalOpen }) {
     const [name, setName] = useState('')
     const [newColumns, setNewColumns] = useState(
         [
@@ -72,10 +72,26 @@ function AddEditBoardModal({setBoardModalOpen , type ,}) {
                                />
                                <img src={crossIcon} className="cursor-pointer m-4" alt="icon" onClick={() => {
                                    onDelete(column.id)
-                               }}/>
+                               }}
+                               />
                            </div>
                        ))
                    }
+               </div>
+
+               <div>
+                   <button className="w-full items-center hover:opacity-75 dark:text-[#DD7878] dark:bg-white text-white bg-[#DD7878] py-2 rounded-full mt-2" onClick={() => {
+                       setNewColumns((state) => [
+                           ...state ,
+                           {name : '' , task : [] , id : uuidv4()}
+                       ])
+                   }}>
+                       + Add new column
+                   </button>
+
+                   <button className=" w-full items-center hover:opacity-75 dark:text-white dark:bg-[#DD7878] mt-8 relative text-white bg-[#DD7878] py-2 rounded-full">
+                       { type === 'add' ? 'Create New Board' : 'Save Changes'}
+                   </button>
                </div>
 
            </div>
@@ -87,7 +103,7 @@ function AddEditBoardModal({setBoardModalOpen , type ,}) {
 AddEditBoardModal.propTypes = {
     setBoardModalOpen: PropTypes.bool.isRequired,
     BoardModalOpen: PropTypes.bool.isRequired,
-    type: PropTypes.bool.isRequired,
+    type: PropTypes.string.isRequired,
 };
 
 export default AddEditBoardModal;
