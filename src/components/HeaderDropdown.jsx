@@ -42,7 +42,7 @@ function HeaderDropdown({setOpenDropdown, setBoardModalOpen}) {
                 </h3>
 
                 <div>
-                    {boards.map((board, index) => (
+                    {Array.isArray(boards) && boards.map((board, index) => (
                         <div
                         className={`flex items-baseline dark:text-white space-x-2 px-5 py-4 ${board.isActive && 'bg-[#DD7878] rounded-r-full text-white mr-8'}`}
                         key={index}
