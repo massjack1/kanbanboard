@@ -2,16 +2,21 @@ import PropTypes from "prop-types";
 import {useState} from "react";
 import { v4 as uuidv4} from "uuid";
 import crossIcon from "../assets/icon-cross.svg";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import boardsSlice from "../redux/boardsSlice.js";
 
 
-function AddEditTaskModal({ type , device, setOpenAddEditTask }) {
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
-    const board = useSelector((state) => state.boards).find((board) => board.isActive)
+function AddEditTaskModal({ type , device, setOpenAddEditTask , taskIndex , prevColIndex = 0 , }) {
+    const dispatch = useDispatch();
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const board = useSelector((state) => state.boards).find((board) => board.isActive);
+    const [isValid, setIsValid] = useState(true);
 
     const columns = board.columns
-
+    const col = columns.find((col , index) => index === prevColIndex)
+    const [status, setStatus] = useState(columns[prevColIndex].name);
+    const [newColIndex, setNewColIndex] = useState(prevColIndex);
     const [subtasks, setSubtasks] = useState(
         [
             { title: '' , isCompleted : false , id : uuidv4() },
@@ -21,17 +26,64 @@ function AddEditTaskModal({ type , device, setOpenAddEditTask }) {
     )
 
     const onChange = (id , newValue) => {
-        setSubtasks((pervState) => {
-            const newState = [...pervState]
+        setSubtasks((prevState) => {
+            const newState = [...prevState]
             const subtask = newState.find((subtask) => subtask.id === id)
             subtask.title = newValue
             return newState
         })
     }
 
+    const onChangeStatus = (e) => {
+        setStatus(e.target.value)
+        setNewColIndex(e.target.selectedIndex)
+    }
+
     const onDelete = (id) => {
         setSubtasks( (perState) => perState.filter((el) => el.id !== id ))
     }
+
+    const validate = () => {
+        setIsValid(false)
+        if(!title.trim()) {
+            return false
+        }
+
+        for ( let i = 0; i < subtasks.length; i++) {
+            if(!subtasks[i].title.trim()){
+                return false
+            }
+        }
+
+        setIsValid(true)
+        return true
+    }
+
+    const onSubmit = (type) => {
+        if (type === "add") {
+            dispatch(
+                boardsSlice.actions.addTask({
+                    title,
+                    description,
+                    subtasks,
+                    status,
+                    newColIndex,
+                })
+            );
+        } else {
+            dispatch(
+                boardsSlice.actions.editTask({
+                    title,
+                    description,
+                    subtasks,
+                    status,
+                    taskIndex,
+                    prevColIndex,
+                    newColIndex,
+                })
+            );
+        }
+    };
 
 
     return(
@@ -140,13 +192,29 @@ function AddEditTaskModal({ type , device, setOpenAddEditTask }) {
                     <label className="text-sm dark:text-white text-gray-500">
 
                     </label>
-                    <select className=" select-status flex flex-grow px-4 py-2 rounded-md text-sm bg-transparent focus:border-0 border border-gray-300 focus:outline-[#DD7878]">
+                    <select
+                        onChange={(e) => onChangeStatus(e)}
+                        value={status}
+                        className=" select-status flex flex-grow px-4 py-2 rounded-md text-sm bg-transparent focus:border-0 border border-gray-300 focus:outline-[#DD7878]">
                         {columns.map((column , index) => (
                             <option value={column.name} key={index}>
                                 {column.name}
                             </option>
                         ))}
                     </select>
+
+                    <button
+                        onClick={() => {
+                            const isValid = validate()
+                            if(isValid) {
+                                onSubmit(type)
+                                setOpenAddEditTask(false)
+                            }
+                        }}
+                        className="w-full items-center text-white bg-[#DD7878] py-2 rounded-full hover:opacity-75"
+                    >
+                        {type === 'edit' ? 'Save Edit' : 'Create Task' }
+                    </button>
                 </div>
 
             </div>
@@ -155,6 +223,8 @@ function AddEditTaskModal({ type , device, setOpenAddEditTask }) {
 }
 
 AddEditTaskModal.propTypes = {
+    taskIndex: PropTypes.string.isRequired,
+    prevColIndex: PropTypes.func.isRequired,
     setOpenAddEditTask: PropTypes.func.isRequired,
     type: PropTypes.string.isRequired,
     device: PropTypes.bool.isRequired,
